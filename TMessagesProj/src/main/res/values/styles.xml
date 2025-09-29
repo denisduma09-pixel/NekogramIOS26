@@ -1,15 +1,16 @@
-<resources
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--THEMES-->
+    <!-- KOTUKTOPERGRAM LIQUID GLASS THEMES -->
 
     <style name="Theme.TMessages.Start" parent="Theme.AppCompat.Light">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:actionBarStyle">@style/ActionBar.Transparent.TMessages.Start</item>
-        <item name="android:colorBackground">@android:color/white</item>
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:colorBackground">@color/bg_rus_night</item>
+        <item name="android:windowBackground">@color/bg_rus_night</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:navigationBarColor">@color/bg_rus_dusk</item>
+        <item name="android:statusBarColor">@color/dynamic_island_bg</item>
         <item name="android:textViewStyle">@style/MyTextViewStyle</item>
     </style>
 
@@ -18,8 +19,10 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBarOverlay">false</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:colorBackground">@android:color/white</item>
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:colorBackground">@color/bg_rus_night</item>
+        <item name="android:windowBackground">@color/bg_rus_night</item>
+        <item name="android:navigationBarColor">@color/bg_rus_dusk</item>
+        <item name="android:statusBarColor">@color/dynamic_island_bg</item>
         <item name="android:itemTextAppearance">@style/ActionBar.Transparent.TMessages.Item</item>
         <item name="android:listViewStyle">@style/Theme.TMessages.ListView</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_ex</item>
@@ -32,8 +35,10 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBarOverlay">false</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:colorBackground">@android:color/black</item>
-        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:colorBackground">@color/bg_rus_night</item>
+        <item name="android:windowBackground">@color/bg_rus_night</item>
+        <item name="android:navigationBarColor">@color/bg_rus_dusk</item>
+        <item name="android:statusBarColor">@color/dynamic_island_bg</item>
         <item name="android:itemTextAppearance">@style/ActionBar.Transparent.TMessages.Item</item>
         <item name="android:listViewStyle">@style/Theme.TMessages.ListView</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_ex</item>
@@ -71,6 +76,15 @@
         <item name="android:windowActionBar">false</item>
     </style>
 
+    <!-- DYNAMIC ISLAND -->
+    <style name="DynamicIslandStyle">
+        <item name="android:background">@drawable/dynamic_island_bg</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginStart">80dp</item>
+        <item name="android:layout_marginEnd">80dp</item>
+    </style>
+
     <style name="scrollbarShapeStyle">
         <item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
         <item name="android:scrollbarStyle">insideInset</item>
@@ -84,13 +98,12 @@
     </style>
 
     <!-- TextView -->
-
     <style name="MyTextViewStyle" parent="android:Widget.Holo.Light.TextView">
         <item name="android:hyphenationFrequency">none</item>
+        <item name="android:textColor">@color/text_primary</item>
     </style>
 
     <!-- POPUP -->
-
     <style name="PopupAnimation" parent="android:Animation" mce_bogus="1">
         <item name="android:windowEnterAnimation">@anim/popup_in</item>
         <item name="android:windowExitAnimation">@anim/popup_out</item>
@@ -105,32 +118,29 @@
         <item name="android:windowExitAnimation">@anim/rd_dialog_exit</item>
     </style>
 
-    <!--ACTION BAR-->
-
+    <!-- ACTION BAR -->
     <style name="ActionBar.Transparent.TMessages.Start" parent="android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">#ff527da3</item>
+        <item name="android:background">@drawable/gradient_navbar</item>
         <item name="android:logo">@drawable/transparent</item>
         <item name="android:title">""</item>
     </style>
 
-    <!--ACTION BAR ITEMS-->
-
+    <!-- ACTION BAR ITEMS -->
     <style name="ActionBar.Transparent.TMessages.Item" parent="android:TextAppearance.Widget.IconMenu.Item">
-        <item name="android:textColor">#000000</item>
+        <item name="android:textColor">@color/text_primary</item>
         <item name="android:textSize">18sp</item>
     </style>
 
-    <!--LIST VIEW-->
-
+    <!-- LIST VIEW -->
     <style name="Theme.TMessages.ListView" parent="@android:style/Widget.ListView">
         <item name="android:listSelector">@drawable/list_selector_ex</item>
         <item name="android:fadingEdge">none</item>
         <item name="android:dividerHeight">1dp</item>
         <item name="android:divider">@color/divider</item>
+        <item name="android:background">@color/bg_rus_dusk</item>
     </style>
 
-    <!--ALERT DIALOG-->
-
+    <!-- ALERT DIALOG -->
     <style name="DialogNoAnimation">
         <item name="android:windowEnterAnimation">@anim/no_animation</item>
         <item name="android:windowExitAnimation">@anim/no_animation</item>
@@ -144,7 +154,6 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowFullscreen">false</item>
-
         <item name="android:itemTextAppearance">@style/ActionBar.Transparent.TMessages.Item</item>
         <item name="android:listViewStyle">@style/Theme.TMessages.ListView</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_ex</item>
@@ -164,13 +173,10 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <!--APP WIDGET-->
-
+    <!-- APP WIDGET -->
     <style name="Base.Theme.TMessages.AppWidget" parent="Theme.TMessages"/>
-
     <style name="Theme.TMessages.AppWidget" parent="Base.Theme.TMessages.AppWidget">
         <item name="widgetBackgroundCornerRadius">@dimen/app_widget_background_corner_radius</item>
-
         <item name="widgetPreviewTitle"/>
         <item name="widgetPreviewContent"/>
         <item name="widgetPreviewTime"/>
@@ -178,72 +184,9 @@
         <item name="widgetPreviewImage">@null</item>
     </style>
 
-    <style name="Theme.TMessages.AppWidget.Preview">
-        <item name="widgetPreviewTitle">Local Weather</item>
-        <item name="widgetPreviewContent">&#9728; 30°C Sunny,</item>
-        <item name="widgetPreviewTime">13:00</item>
-        <item name="widgetPreviewDot">0</item>
-        <item name="widgetPreviewImage">@drawable/widget_avatar_5</item>
-    </style>
-
-    <style name="Theme.TMessages.AppWidget.Preview2">
-        <item name="widgetPreviewTitle">Rex</item>
-        <item name="widgetPreviewContent">It\'s morning in Tokyo &#128526;</item>
-        <item name="widgetPreviewTime">12:00</item>
-        <item name="widgetPreviewDot">2</item>
-        <item name="widgetPreviewImage">@drawable/widget_avatar_7</item>
-    </style>
-
-    <style name="Theme.TMessages.AppWidget.Preview4">
-        <item name="widgetPreviewTitle">Doge</item>
-        <item name="widgetPreviewDot">0</item>
-        <item name="widgetPreviewImage">@drawable/widget_avatar_1</item>
-    </style>
-
-    <style name="Theme.TMessages.AppWidget.Preview5">
-        <item name="widgetPreviewTitle">Donald</item>
-        <item name="widgetPreviewDot">2</item>
-        <item name="widgetPreviewImage">@drawable/widget_avatar_4</item>
-    </style>
-
-    <style name="Theme.TMessages.AppWidget.Preview6">
-        <item name="widgetPreviewTitle">Kate</item>
-        <item name="widgetPreviewDot">2</item>
-        <item name="widgetPreviewImage">@drawable/widget_avatar_2</item>
-    </style>
-
-    <style name="Theme.TMessages.AppWidget.Preview7">
-        <item name="widgetPreviewTitle">Nick</item>
-        <item name="widgetPreviewDot">2</item>
-        <item name="widgetPreviewImage">@drawable/widget_avatar_3</item>
-    </style>
-
-    <!-- APP WIDGET STYLES-->
-
-    <style name="Base.TMessages.AppWidget.Background" parent="android:Widget">
-        <item name="android:id">@android:id/background</item>
-        <item name="android:padding">2dp</item>
-    </style>
-
-    <style name="TMessages.AppWidget.Background" parent="Base.TMessages.AppWidget.Background">
-        <item name="android:background">@drawable/widget_bg</item>
-    </style>
-
-    <style name="Base.TMessages.AppWidget.Badge" parent="android:Widget">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">23dp</item>
-        <item name="android:paddingLeft">7dp</item>
-        <item name="android:paddingRight">7dp</item>
-        <item name="android:paddingBottom">1dp</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:gravity">center</item>
-        <item name="android:minWidth">23dp</item>
-        <item name="android:textSize">13dp</item>
-        <item name="android:background">@drawable/widget_badge_background</item>
-    </style>
-
-    <style name="TMessages.AppWidget.Badge" parent="Base.TMessages.AppWidget.Badge">
-        <item name="android:textColor">@color/widget_badge</item>
+    <!-- DYNAMIC ISLAND THEME -->
+    <style name="Theme.Kotuktoper.DynamicIsland" parent="Theme.TMessages">
+        <item name="android:statusBarColor">@color/dynamic_island_bg</item>
     </style>
 
 </resources>
