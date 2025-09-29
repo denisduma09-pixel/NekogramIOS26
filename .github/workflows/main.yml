@@ -1,0 +1,85 @@
+name: 🚀 ULTIMATE KOTUKTOPER BUILD
+
+on: 
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    
+    steps:
+    - name: 📥 Checkout
+      uses: actions/checkout@v4
+      
+    - name: 🛠️ Ultimate Build Setup
+      run: |
+        chmod +x gradlew
+        
+        # Функция секундомера
+        echo 'start_timer() { 
+          local start=$SECONDS
+          while kill -0 $2 2>/dev/null; do
+            local duration=$((SECONDS - start))
+            echo "⏱️ [$1] Выполняется: ${duration}сек..."
+            sleep 5
+          done
+        }' > timer.sh
+        
+        # ОЧИСТКА И ПОДГОТОВКА
+        echo "🧹 Очистка проекта..."
+        timeout 2m ./gradlew clean --no-daemon &
+        CLEAN_PID=$!
+        source timer.sh "Clean" $CLEAN_PID &
+        TIMER_PID=$!
+        wait $CLEAN_PID || echo "⚠️ Clean завершился с ошибкой, но продолжаем"
+        kill $TIMER_PID 2>/dev/null || true
+        
+        # КАСКАДНАЯ СБОРКА С СЕКУНДОМЕРОМ
+        echo "🔧 Попытка 1: Основная сборка (5 минут)..."
+        timeout 5m ./gradlew :TMessagesProj:assembleDebug --no-daemon --stacktrace --info &
+        BUILD1_PID=$!
+        source timer.sh "Сборка 1" $BUILD1_PID &
+        TIMER1_PID=$!
+        wait $BUILD1_PID && echo "✅ Сборка 1 успешна!" || \
+        
+        (kill $TIMER1_PID 2>/dev/null || true
+        echo "🔧 Попытка 2: Упрощённая сборка (4 минуты)..."
+        timeout 4m ./gradlew :TMessagesProj:assembleDebug --no-daemon --no-build-cache --no-configuration-cache &
+        BUILD2_PID=$!
+        source timer.sh "Сборка 2" $BUILD2_PID &
+        TIMER2_PID=$!
+        wait $BUILD2_PID && echo "✅ Сборка 2 успешна!" || \
+        
+        (kill $TIMER2_PID 2>/dev/null || true
+        echo "🔧 Попытка 3: Сборка без проверок (4 минуты)..."
+        timeout 4m ./gradlew :TMessagesProj:assembleDebug --no-daemon -x check -x test -x lint -x verify &
+        BUILD3_PID=$!
+        source timer.sh "Сборка 3" $BUILD3_PID &
+        TIMER3_PID=$!
+        wait $BUILD3_PID && echo "✅ Сборка 3 успешна!" || \
+        
+        (kill $TIMER3_PID 2>/dev/null || true
+        echo "🔧 Попытка 4: Просто собрать APK (5 минут)..."
+        timeout 5m ./gradlew assembleDebug --no-daemon --stacktrace &
+        BUILD4_PID=$!
+        source timer.sh "Сборка 4" $BUILD4_PID &
+        TIMER4_PID=$!
+        wait $BUILD4_PID && echo "✅ Сборка 4 успешна!" || \
+        
+        (kill $TIMER4_PID 2>/dev/null || true
+        echo "❌ Все попытки провалились"
+        exit 1))))))
+        
+    - name: 📦 Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: KotuktoperGram-Liquid
+        path: |
+          **/build/outputs/apk/**/*.apk
+          **/app/build/outputs/apk/**/*.apk
+          **/TMessagesProj/build/outputs/apk/**/*.apk
+        if-no-files-found: warn
+        retention-days: 30
