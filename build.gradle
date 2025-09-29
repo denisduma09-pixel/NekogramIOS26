@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application' version '8.12.2' apply false
     id 'com.google.gms.google-services' version '4.4.3' apply false
     id 'com.google.firebase.crashlytics' version '3.0.6' apply false
-    id 'org.lsposed.lsparanoid' version '0.5.2'
+    id 'org.lsposed.lsparanoid' version '0.5.2' apply false
 }
 
 subprojects {
@@ -14,35 +14,95 @@ subprojects {
                 buildToolsVersion "36.0.0"
                 ndkVersion "27.3.13750724"
 
+                // ⚡ УСКОРЕНИЕ СБОРКИ
+                buildFeatures {
+                    buildConfig = true
+                    aidl = false
+                    renderScript = false
+                    shaders = false
+                }
+
+                // 🚀 ОТКЛЮЧЕНИЕ ПРОВЕРОК ДЛЯ СКОРОСТИ
                 lint {
                     checkReleaseBuilds false
+                    abortOnError false
                     disable 'MissingTranslation', 'ExtraTranslation', 'BlockedPrivateApi'
                 }
 
                 compileOptions {
                     sourceCompatibility JavaVersion.VERSION_21
                     targetCompatibility JavaVersion.VERSION_21
-
                     coreLibraryDesugaringEnabled true
                 }
 
                 defaultConfig {
                     minSdkVersion 21
                     targetSdkVersion 35
+                    
+                    // ⏱️ ОПТИМИЗАЦИЯ
+                    multiDexEnabled true
+                    crunchPngs = false  // Отключаем сжатие PNG
                 }
 
+                // 🎯 ОПТИМИЗАЦИЯ СБОРКИ
                 buildTypes {
+                    debug {
+                        debuggable true
+                        minifyEnabled false
+                        shrinkResources false
+                        crunchPngs = false
+                    }
                     play {
                         initWith release
+                        minifyEnabled true
+                        shrinkResources true
+                        crunchPngs = true
+                    }
+                    release {
+                        minifyEnabled true
+                        shrinkResources true
+                        crunchPngs = true
                     }
                 }
 
-                buildFeatures.buildConfig = true
+                // 📦 ОПТИМИЗАЦИЯ ПАКЕТИРОВАНИЯ
+                packagingOptions {
+                    resources {
+                        excludes += [
+                            'META-INF/**',
+                            '**/kotlin/**',
+                            '**/*.txt',
+                            '**/*.proto'
+                        ]
+                        pickFirsts += [
+                            '**/libc++_shared.so'
+                        ]
+                    }
+                }
             }
 
             dependencies {
                 coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs_nio:2.1.5'
             }
+
+            // ⚡ ДОПОЛНИТЕЛЬНЫЕ ОПТИМИЗАЦИИ
+            tasks.withType(JavaCompile) {
+                options.compilerArgs += [
+                    '-Xlint:-options',
+                    '-Xlint:-deprecation'
+                ]
+                options.fork = true
+                options.forkOptions.memoryMaximumSize = '2g'
+            }
+        }
+    }
+}
+
+// 🎯 ГЛОБАЛЬНЫЕ ОПТИМИЗАЦИИ GRADLE
+gradle.projectsLoaded {
+    gradle.allprojects { project ->
+        project.tasks.withType(JavaCompile) {
+            options.fork = true
         }
     }
 }
